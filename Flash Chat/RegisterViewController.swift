@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Firebase
+import SVProgressHUD
 
 
 class RegisterViewController: UIViewController {
@@ -29,11 +31,25 @@ class RegisterViewController: UIViewController {
   
     @IBAction func registerPressed(_ sender: AnyObject) {
         
+        SVProgressHUD.show()
+        
 
         
         //TODO: Set up a new user on our Firbase database
         
-        
+        Auth.auth().createUser(withEmail: emailTextfield.text!, password: passwordTextfield.text!) { (user, error) in // Closure starts the completion handler block and it's triggered only when authentication is completed.
+
+            if error != nil {
+                print (error!)
+            }
+            else {
+                SVProgressHUD.dismiss()
+     //           print("Registration Successful!")
+                
+                self.performSegue(withIdentifier: "goToChat", sender: self)
+                
+            }
+        }           // Closure ends
 
         
         
